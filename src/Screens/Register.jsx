@@ -1,8 +1,8 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Alert,  Image, Text, View, TextInput, StatusBar, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons'
-import Button from '../../Components/Button';
+import Button from '../Components/Button';
 import { SIZES } from '../Components/Constants/Theme';
 import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
@@ -41,7 +41,7 @@ const Register = ({navigation}) => {
         await AsyncStorage.setItem("userRegistered",email);
         await AsyncStorage.setItem("user_type",user_type);
         Alert.alert("Success ✔️","User created succesful")
-        navigation.navigate("OTP")
+        navigation.navigate("Register")
       }
       if(response.status === 208){
         Alert.alert("Warning ⚠️","User already exist")
@@ -82,10 +82,10 @@ const Register = ({navigation}) => {
 
   return (
     <SafeAreaView style={container}>
-      <StatusBar backgroundColor={'#B3CDE0'} barStyle={'dark-content'} />
       <ScrollView style={scrollContainer}> 
+      <StatusBar backgroundColor={'#fff'} barStyle={'dark-content'} />
       <View style={imageContainer}>
-        <Image source={require("../../../assets/logo.png")} style={image} />
+        <Image source={require('../../assets/images/welcome1.png')} style={image} />
       </View>
       <View style={welcomeContainer}>
         <Text style={welcomeTitle}>Create Account</Text>
@@ -135,11 +135,15 @@ const Register = ({navigation}) => {
        
       {loading && <LoadingModal modalVisible={true} />} 
 
-      <Button title={'Already have an account?'}
+      {/* <Button title={'Already have an account?'}
        buttonContainer={haveAccount}
        buttonText={haveAccountText}
        press={()=>navigation.navigate("Login")}
-       />
+       /> */}
+
+       <View style={haveAccount}>
+       <Text style={haveAccountText}>Already have an account</Text>
+       </View>
        </ScrollView> 
     </SafeAreaView>
   );
@@ -149,15 +153,16 @@ const Register = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B3CDE0",
+    backgroundColor: "#fff",
     width: '100%',
   },
   imageContainer: {
     alignItems: 'center',
+    paddingTop:SIZES.height*0.05
   },
   image: {
-    width: SIZES.width*0.7,
-    height: SIZES.height*0.30,
+    width: SIZES.width*0.5,
+    height: SIZES.height*0.25,
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -190,7 +195,9 @@ const styles = StyleSheet.create({
     margin: 7,
     backgroundColor: 'white',
     color: 'black',
-    marginVertical:10
+    marginVertical:10,
+    borderWidth: 2,
+    borderColor: 'black',
   },
   buttonContainer: {
     alignItems: 'center',
@@ -210,10 +217,7 @@ const styles = StyleSheet.create({
     paddingTop: SIZES.height*0.035
   },
   haveAccountText: {
-    color: 'white',
-    backgroundColor: '#6497B1',
-    width: SIZES.width*0.6,
-    padding: SIZES.height*0.017,
+    color: 'black',
     textAlign: 'center',
     borderRadius: 15,
     overflow:'hidden'
@@ -227,9 +231,9 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    backgroundColor: "#B3CDE0",
     flexGrow: 1,
-    paddingBottom:50
+    paddingBottom:50,
+    backgroundColor:"#fff"
   },
   indicator:{
     alignItems:'center',

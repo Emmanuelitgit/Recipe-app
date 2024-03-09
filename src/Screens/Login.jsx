@@ -36,23 +36,24 @@ const Login = ({ navigation }) => {
     try {
       setLoading(true);
   
-      const response = await axios.post(
-        'https://cleaningservice.onrender.com/api/login/',
-        {
-          email,
-          password,
-        }
-      );
-      if (response.status === 200) {
-        console.log(response.data)
-        // await AsyncStorage.setItem('access', response.data.token.access);
-        // await AsyncStorage.setItem('user', email);
-        // await AsyncStorage.setItem('user_type', response.data.user.user_type);
-        Alert.alert('Success✔️', 'Logged in successful');
-        setEmail('');
-        setPassword('');
-        navigation.navigate('Organizations');
-      }
+      // const response = await axios.post(
+      //   'https://cleaningservice.onrender.com/api/login/',
+      //   {
+      //     email,
+      //     password,
+      //   }
+      // );
+      // if (response.status === 200) {
+      //   console.log(response.data)
+      //   // await AsyncStorage.setItem('access', response.data.token.access);
+      //   // await AsyncStorage.setItem('user', email);
+      //   // await AsyncStorage.setItem('user_type', response.data.user.user_type);
+      //   Alert.alert('Success✔️', 'Logged in successful');
+      //   setEmail('');
+      //   setPassword('');
+      //   navigation.navigate('Welcome');
+      // }
+      navigation.navigate('Welcome');
     } catch (error) {
       Alert.alert('Invalid⚠️', 'Incorrect password or username');
       console.log(error)
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    backgroundColor: 'blue',
+    backgroundColor: 'orange',
     width: SIZES.width * 0.4,
     padding: SIZES.height * 0.017,
     textAlign: 'center',
