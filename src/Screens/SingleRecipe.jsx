@@ -2,9 +2,46 @@ import React from 'react';
 import { View, SafeAreaView, Text, StyleSheet, Image, StatusBar } from 'react-native';
 import { SIZES } from '../utils/Data';
 import { recipeList } from '../utils/Data';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AntDesign } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
+
 
 const SingleRecipe = () => {
+
+    const[recipes, setRecipes] = useState()
+
+    const handleNavigate = (itemId) => {
+        navigation.navigate('SingleOrg', { itemId });
+      };
+
+    useEffect(() => {
+        const getRecipes = async () => {
+          try {
+            const accessToken = await AsyncStorage.getItem('access');
+            if (accessToken) {
+              const response = await axios.get(
+                `http://localhost:5000/login/${itemId}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`, 
+                  },
+                }
+              );
+              if(response.status === 200){
+                setRecipes(response.data)
+              }
+              else{
+                Alert.alert("Error⚠️", 'Something went wrong!')
+              }
+            }
+          } catch (error) {
+            console.error('Something went wrong!', error);
+          }
+        };
+        getRecipes();
+      }, []);
+
   return (
     <SafeAreaView style={styles.container}>
         <StatusBar backgroundColor={"teal"}/>

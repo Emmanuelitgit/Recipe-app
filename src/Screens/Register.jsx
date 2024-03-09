@@ -14,7 +14,6 @@ const Register = ({navigation}) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [user_type, setUserType] = useState("customer");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('')
 
@@ -32,14 +31,12 @@ const Register = ({navigation}) => {
   const handleCreateAccount = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('https://cleaningservice.onrender.com/api/accounts/create/', {
+      const response = await axios.post('http://localhost:5000/register', {
+        username,
         email,
         password,
-        user_type
       });
       if(response.status === 201){
-        await AsyncStorage.setItem("userRegistered",email);
-        await AsyncStorage.setItem("user_type",user_type);
         Alert.alert("Success ✔️","User created succesful")
         navigation.navigate("Register")
       }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,6 +20,7 @@ import Button from '../Components/Button';
 
 
 const Login = ({ navigation }) => {
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,24 +37,20 @@ const Login = ({ navigation }) => {
     try {
       setLoading(true);
   
-      // const response = await axios.post(
-      //   'https://cleaningservice.onrender.com/api/login/',
-      //   {
-      //     email,
-      //     password,
-      //   }
-      // );
-      // if (response.status === 200) {
-      //   console.log(response.data)
-      //   // await AsyncStorage.setItem('access', response.data.token.access);
-      //   // await AsyncStorage.setItem('user', email);
-      //   // await AsyncStorage.setItem('user_type', response.data.user.user_type);
-      //   Alert.alert('Success✔️', 'Logged in successful');
-      //   setEmail('');
-      //   setPassword('');
-      //   navigation.navigate('Welcome');
-      // }
-      navigation.navigate('Welcome');
+      const response = await axios.post(
+        'http://localhost:5000/login',
+        {
+          email,
+          password,
+        }
+      );
+      if (response.status === 200) {
+        await AsyncStorage.setItem('access', response.data.token.access);
+        Alert.alert('Success✔️', 'Logged in successful');
+        setEmail('');
+        setPassword('');
+        navigation.navigate('Welcome');
+      }
     } catch (error) {
       Alert.alert('Invalid⚠️', 'Incorrect password or username');
       console.log(error)
