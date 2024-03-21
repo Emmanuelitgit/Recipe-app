@@ -1,25 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native'
 import { SIZES } from './Constants/Theme'
 import { Feather } from '@expo/vector-icons'
 import { FontAwesome } from '@expo/vector-icons';
 import Card from './Card';
+import { authContext } from '../Context/authContext';
 
 
-const CardItems = ({name, navigation}) => {
+const CardItems = ({nav, name}) => {
+
+  const {handleNavigate} = useContext(authContext)
+
   return (
     <View style={styles.container}>
         <ScrollView>
         <View style={styles.cardContainer}>
             <Pressable style={styles.card}
-              onPress={() => navigation.navigate('SingleRecipe')}
+              onPress={nav}
              >
                 <View style={styles.cardImageContainer}>
                 <Image source={require('../../assets/images/welcome1.png')} style={styles.image} />
                 </View>
-                <View style={styles.cardInfo}
-                  onPress={() => navigation.navigate('SingleRecipe')}
-                >
+                <View style={styles.cardInfo}>
                     <Text>{name}</Text>
                     <Text>40 mins</Text>
                     <View style={styles.icons}>

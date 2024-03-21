@@ -2,9 +2,16 @@ import React from 'react';
 import { View, SafeAreaView } from 'react-native';
 import Category from '../Components/Category';
 
-const RecipeList = () => {
+const RecipeList = ({navigation}) => {
+
+  const handleNavigate = (itemId) =>{
+    navigation.navigate("SingleRecipe", {itemId})
+  }
+
   return (
-        <Category/>
+        <Category
+         nav={handleNavigate(itemId)}
+        />
   )
 }
 

@@ -45,7 +45,7 @@ const Login = ({ navigation }) => {
         }
       );
       if (response.status === 200) {
-        await AsyncStorage.setItem('access', response.data.token.access);
+        await AsyncStorage.setItem('token', response.data.token);
         Alert.alert('Success✔️', 'Logged in successful');
         setEmail('');
         setPassword('');

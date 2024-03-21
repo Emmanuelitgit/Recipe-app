@@ -5,7 +5,7 @@ import { FontAwesome, Feather } from '@expo/vector-icons';
 import Card from './Card';
 import { navBtns } from '../utils/Data';
 
-const Category = () => {
+const Category = ({nav}) => {
     const [selectedButtonIndex, setSelectedButtonIndex] = useState(null);
 
     const handleButtonPress = (index) => {
@@ -50,7 +50,7 @@ const Category = () => {
                     </View>
                 </ScrollView>
             </View>
-            <Card />
+            <Card nav={nav(itemId)}/>
         </SafeAreaView>
     )
 }

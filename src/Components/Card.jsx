@@ -1,17 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import CardItems from './CardItems';
 import { recipeList } from '../utils/Data';
 import { SIZES } from './Constants/Theme';
+import axios from 'axios';
 
-const Card = () => {
+const Card = ({nav}) => {
+
+  const [data, setData] = useState()
+
+  useEffect(()=>{
+    const getData = async()=>{
+      try {
+        const accessToken = await AsyncStorage.getItem('token');
+        if(accessToken){
+          const response = await axios.get("http://localhost:5000/recipe-list",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          } 
+          );
+        if(response.status === 200){
+          setData(response.data)
+        }
+  
+        if(response.status === 404){
+          console.log("data not found")
+        }
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getData()
+  }, [])
 
   return (
     <View style={styles.container}>
         <Text style={styles.cardTitle}>Recipes</Text>
         <FlatList
         data={recipeList}
-        renderItem={({item}) => <CardItems name={item.name} />}
+        renderItem={({item}) => <CardItems name={item.name} nav={nav(item.id)} />} 
         keyExtractor={item => item.id}
         contentContainerStyle={styles.contentContainer}
       />

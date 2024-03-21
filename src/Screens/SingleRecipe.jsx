@@ -16,9 +16,9 @@ const SingleRecipe = () => {
       };
 
     useEffect(() => {
-        const getRecipes = async () => {
+        const getRecipe = async () => {
           try {
-            const accessToken = await AsyncStorage.getItem('access');
+            const accessToken = await AsyncStorage.getItem('token');
             if (accessToken) {
               const response = await axios.get(
                 `http://localhost:5000/login/${itemId}`,
@@ -39,7 +39,7 @@ const SingleRecipe = () => {
             console.error('Something went wrong!', error);
           }
         };
-        getRecipes();
+        getRecipe();
       }, []);
 
   return (
